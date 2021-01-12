@@ -19,6 +19,7 @@
  * Use case:
  * Insertion sort is used when the number of elements is small. It can also be useful when the input array is almost sorted, 
  * only a few elements are misplaced in a complete big array.
+ * This sorting technique is really good for small arrays
  */
 var a = [50, 4, 2, 58, 8]
 for (var i = 1; i < a.length; i++) {
