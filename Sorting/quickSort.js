@@ -23,14 +23,18 @@ function divideAndSort(a, low, high) {
     for (var j = low; j < high; j++) {
         if (a[j] < pivot) {
             i++;
-            let t = a[j];
-            a[j] = a[i];
-            a[i] = t;
+            if (i !== j) { // skipping unnecessary swap
+                let t = a[j];
+                a[j] = a[i];
+                a[i] = t;
+            }
         }
     }
-    var t = a[i + 1];
-    a[i + 1] = pivot;
-    a[high] = t;
+    if (i + 1 !== high) { // skipping unnecessary swap
+        let t = a[i + 1];
+        a[i + 1] = pivot;
+        a[high] = t;
+    }
     return i + 1;
 }
 
@@ -44,3 +48,4 @@ function quickSort(a, low, high) {
 }
 
 console.log("Sorted in ascending order", sorted);
+
