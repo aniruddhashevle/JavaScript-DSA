@@ -153,4 +153,22 @@ class LinkedList {
             refNode.data = data;
         }
     }
+
+    reverse() {
+        if (this.isEmpty()) {
+            console.log('Linked list is Empty!');
+        } else if (this.size === 1) {
+            return this.head;
+        } else {
+            var p = this.head, q = this.head.next;
+            p.next = null;
+            while (q) {
+                this.head = q;
+                q = this.head.next;
+                this.head.next = p;
+                p = this.head;
+            }
+            return this.head;
+        }
+    }
 }
