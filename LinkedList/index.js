@@ -11,6 +11,9 @@ class Node {
  * Insertion
  * Deletion
  * Updation
+ * Reverse
+ * 
+ * indexing of a node starts from 0
  */
 class LinkedList {
     head = null;
@@ -172,3 +175,22 @@ class LinkedList {
         }
     }
 }
+
+var ll = new LinkedList();
+ll.insertAtEnd(22);
+ll.insertAtEnd(20);
+ll.insertAtStart(10);
+ll.insertAtStart(33);
+ll.insertAfter(100, 2);
+console.log('ll', ll);
+
+ll.reverse();
+console.log('ll', ll);
+
+ll.deleteAtStart();
+ll.deleteAtEnd();
+ll.deleteAt(2);
+console.log('ll', ll);
+
+ll.updateAt(55, 1)
+console.log('ll', ll);
