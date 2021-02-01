@@ -8,7 +8,9 @@ class Node {
 /**
  * Linked List:
  * 
- * Insertion: O(n)
+ * Insertion
+ * Deletion
+ * Updation
  */
 class LinkedList {
     head = null;
@@ -18,16 +20,20 @@ class LinkedList {
         return this.head === null;
     }
 
-    getLastNodeRef() {
+    getNodeRefAt(index) {
         if (this.isEmpty()) {
             return null;
-        } else {
-            var temp = this.head;
-            while (temp.next) {
-                temp = temp.next;
-            }
-            return temp;
         }
+        var tempNode = this.head,
+            counter = 0;
+        if (index === 0) {
+            return tempNode;
+        }
+        while (counter !== index) {
+            tempNode = tempNode.next;
+            counter++;
+        }
+        return tempNode;
     }
 
     insertAtStart(data) {
@@ -46,7 +52,7 @@ class LinkedList {
         if (this.isEmpty()) {
             this.head = node;
         } else {
-            var lastNode = this.getLastNodeRef();
+            var lastNode = this.getNodeRefAt(this.size - 1);
             lastNode.next = node;
         }
         this.size++;
@@ -64,18 +70,87 @@ class LinkedList {
                 this.insertAtEnd(data);
             } else if (index > this.size) {
                 console.log(`Linked list size is ${this.size} and the index provided is exceeding this size!`);
-            } else {
-                var node = new Node(data),
-                    tempNode = this.head,
-                    counter = 0;
-                while (counter !== index) {
-                    tempNode = tempNode.next;
-                    counter++;
-                }
+            } else if (index) {
+                var node = new Node(data);
+                var tempNode = this.getNodeRefAt(index);
                 node.next = tempNode.next;
                 tempNode.next = node;
                 this.size++;
+            } else {
+                console.log('Please specify index after which new node will be inserted!');
             }
+        }
+    }
+
+    deleteAtStart() {
+        if (this.isEmpty()) {
+            console.log('Linked list is Empty!');
+            return null;
+        } else {
+            var deletedData = this.head.data;
+            this.head = this.head.next;
+            this.size--;
+            return deletedData;
+        }
+    }
+
+    deleteAtEnd() {
+        if (this.isEmpty()) {
+            console.log('Linked list is Empty!');
+            return null;
+        } else {
+            this.size--;
+            return this.deleteNode(this.size);
+        }
+    }
+
+    deleteAt(index) {
+        if (this.isEmpty()) {
+            console.log('Linked list is Empty!');
+        } else {
+            if (index < 0) {
+                console.log('Invalid index');
+            } else if (index === 0) {
+                this.deleteAtStart(data);
+            } else if (this.size === index) {
+                this.deleteAtEnd(data);
+            } else if (index > this.size) {
+                console.log(`Linked list size is ${this.size} and the index provided is exceeding this size!`);
+            } else if (index) {
+                this.size--;
+                return this.deleteNode(index);
+            } else {
+                console.log('Please specify index at which the node will be deleted!');
+            }
+        }
+    }
+
+    deleteNode(index) {
+        var refNode = this.getNodeRefAt(index);
+        if (index - 1 < 0) {
+            this.head = null;
+        } else {
+            var prevRefNode = this.getNodeRefAt(index - 1);
+            prevRefNode.next = refNode.next;
+        }
+        var deletedData = refNode.data;
+        return deletedData;
+    }
+
+    updateAt(data, index) {
+        if (this.isEmpty()) {
+            console.log('Linked list is Empty!');
+        } else if (index === 0) {
+            if (this.head.data === data) {
+                console.log(`${data} is already present at index ${index}`)
+            } else {
+                this.head.data = data;
+            }
+        } else if (index > this.size) {
+            console.log(`Linked list size is ${this.size} and the index provided is exceeding this size!`);
+        } else {
+            var refNode = this.getNodeRefAt(index);
+            refNode.data = data;
         }
     }
 }
