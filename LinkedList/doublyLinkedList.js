@@ -1,7 +1,8 @@
 class Node {
-    constructor(data, next = null) {
+    constructor(data, next = null, prev = null) {
         this.data = data;
         this.next = next;
+        this.prev = prev;
     }
 }
 
@@ -15,7 +16,7 @@ class Node {
  * 
  * indexing of a node starts from 0
  */
-class LinkedList {
+class DoublyLinkedList {
     head = null;
     size = 0;
 
@@ -57,6 +58,10 @@ class LinkedList {
         } else {
             var lastNode = this.getNodeRefAt(this.size - 1);
             lastNode.next = node;
+            if (this.size - 2 >= 0) {
+                var secondLastNode = this.getNodeRefAt(this.size - 2);
+                if (secondLastNode) lastNode.prev = secondLastNode;
+            }
         }
         this.size++;
     }
@@ -78,6 +83,10 @@ class LinkedList {
                 var tempNode = this.getNodeRefAt(index);
                 node.next = tempNode.next;
                 tempNode.next = node;
+                if (index - 1 >= 0) {
+                    var prevRefNode = this.getNodeRefAt(index - 1);
+                    if (prevRefNode) tempNode.prev = prevRefNode;
+                }
                 this.size++;
             } else {
                 console.log('Please specify index after which new node will be inserted!');
@@ -92,6 +101,7 @@ class LinkedList {
         } else {
             var deletedData = this.head.data;
             this.head = this.head.next;
+            this.head.prev = null;
             this.size--;
             return deletedData;
         }
@@ -135,6 +145,7 @@ class LinkedList {
         } else {
             var prevRefNode = this.getNodeRefAt(index - 1);
             prevRefNode.next = refNode.next;
+            refNode.prev = prevRefNode;
         }
         var deletedData = refNode.data;
         return deletedData;
@@ -154,6 +165,7 @@ class LinkedList {
         } else {
             var refNode = this.getNodeRefAt(index);
             if (refNode.data === data) {
+
                 console.log(`${data} is already present at index ${index}`)
             } else {
                 refNode.data = data;
@@ -167,20 +179,21 @@ class LinkedList {
         } else if (this.size === 1) {
             return this.head;
         } else {
-            var p = this.head, q = this.head.next;
+            var p = this.head;
+            this.head = this.head.next;
             p.next = null;
-            while (q) {
-                this.head = q;
-                q = this.head.next;
-                this.head.next = p;
+            while (this.head) {
+                p.prev = this.head;
+                this.head.prev = this.head.next;
                 p = this.head;
+                this.head = this.head.next;
             }
             return this.head;
         }
     }
 }
 
-var ll = new LinkedList();
+var ll = new DoublyLinkedList();
 ll.insertAtEnd(22);
 ll.insertAtEnd(20);
 ll.insertAtStart(10);
