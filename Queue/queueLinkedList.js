@@ -56,4 +56,17 @@ class QLinkedList {
             temp = temp.next;
         }
     }
+
+    reverse() {
+        var ref = this.front,
+            q = this.front,
+            p = null;
+        while (q) {
+            this.front = q;
+            q = q.next;
+            this.front.next = p;
+            p = this.front;
+        }
+        this.rear = ref;
+    }
 }
