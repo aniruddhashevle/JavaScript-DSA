@@ -5,6 +5,17 @@ class LinkedList {
     }
 }
 
+/**
+ * Queue using Linked List
+ * 
+ * enqueue
+ * dequeue
+ * getFront
+ * getRear
+ * destroy
+ * show
+ * reverse
+ */
 class QLinkedList {
     constructor() {
         this.front = null;
