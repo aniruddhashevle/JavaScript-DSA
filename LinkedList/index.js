@@ -214,7 +214,11 @@ class LinkedList {
     //     return temp;
     // }
 
-    // Time: O(n), Space: O(1) 
+    /**
+     * Floyd’s Cycle-Finding Algorithm
+     * 
+     * Time: O(n), Space: O(1) 
+     */
     findLoopNode() {
         if (this.hasCircularLoop) {
             var firstRef = this.head,
