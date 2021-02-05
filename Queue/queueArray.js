@@ -8,6 +8,7 @@
  * destroy
  * show
  * reverse
+ * sort
  */
 class QArray {
     constructor() {
@@ -57,6 +58,10 @@ class QArray {
 
     reverse() {
         this.queue.reverse();
+    }
+
+    sort() {
+        this.queue.sort((a, b) => a - b);
     }
 
 }
