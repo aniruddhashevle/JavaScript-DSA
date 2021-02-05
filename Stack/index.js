@@ -16,37 +16,40 @@ class LinkListNode {
 }
 
 class StackLinkList {
+    top = null;
+    size = 0;
+
     push(val) {
         var newNode = new LinkListNode(val);
         if (this.top) {
             newNode.ref = this.top;
         }
         this.top = newNode;
-        this.size = this.size ? this.size + 1 : 1;
+        this.size++;
     }
+
     pop() {
         if (this.size) {
             const popedVal = this.top.value;
             this.top = this.top.ref;
-            this.size -= 1;
+            this.size--;
             return popedVal;
         } else {
             console.log("Empty Stack!")
             return null;
         }
     }
+
     show() {
         let tempRef = this.top;
-        while (tempRef !== null) {
+        while (tempRef) {
             console.log(tempRef.value);
             tempRef = tempRef.ref;
         }
     }
-    length() {
-        return this.size;
-    }
+
     destroy() {
-        while (this.top !== null) {
+        while (this.top) {
             this.pop();
         }
     }
@@ -64,6 +67,6 @@ stack.show();
 var poped2 = stack.pop();
 console.log("popped value", poped2);
 stack.show();
-console.log("size", stack.length());
+console.log("size", stack.size);
 stack.destroy();
-console.log("size after destroy", stack.length());
+console.log("size after destroy", stack.size);
