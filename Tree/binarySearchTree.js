@@ -126,7 +126,6 @@ class BST {
                 } else {
                     var { parentOfNodeToDelete, nodeToDelete, isLeftNode } = this.findLargestLeftNode(node);
                 }
-                console.log(parentOfNodeToDelete.value, nodeToDelete.value, isLeftNode);
                 // nodeToDelete will always be a leaf nodeF
                 nodeValToBeDeleted = node.value;
                 node.value = nodeToDelete.value;
@@ -136,6 +135,45 @@ class BST {
         } else {
             console.log('Node not found!');
         }
+    }
+
+    getLeafNodes(ref, sum) {
+        if (ref) {
+            if (ref.left === null && ref.right === null) {
+                sum += ref.value;
+                return sum;
+            }
+            if (ref.left) {
+                sum = this.getLeafNodes(ref.left, sum);
+            }
+            if (ref.right) {
+                sum = this.getLeafNodes(ref.right, sum);
+            }
+        }
+        return sum;
+    }
+
+    getNonLeafNodes(ref, sum) {
+        if (ref) {
+            if (ref.left !== null || ref.right !== null) {
+                sum += ref.value;
+            }
+            if (ref.left) {
+                sum = this.getNonLeafNodes(ref.left, sum);
+            }
+            if (ref.right) {
+                sum = this.getNonLeafNodes(ref.right, sum);
+            }
+        }
+        return sum;
+    }
+
+    getSumOfLeafNodes() {
+        return this.getLeafNodes(this.root, 0);
+    }
+
+    getSumOfNonLeafNodes() {
+        return this.getNonLeafNodes(this.root, 0);
     }
 }
 
@@ -151,4 +189,6 @@ bst.insert(7);
 bst.insert(9);
 bst.root;
 bst.delete(20);
-bst.root;
+console.log(bst.root);
+console.log("Sum of Leaf Nodes", bst.getSumOfLeafNodes());
+console.log("Sum of Non-Leaf Nodes", bst.getSumOfNonLeafNodes());
