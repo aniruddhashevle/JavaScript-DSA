@@ -6,6 +6,9 @@
  * getSumOfLeafNodes
  * getSumOfNonLeafNodes
  * display
+ * inorder
+ * preorder
+ * postorder
  */
 
 class Node {
@@ -85,32 +88,11 @@ class BST {
         }
     }
 
-    findSmallestRightNode(node, parentNode, isLeftNode = false) {
-        if (!parentNode) parentNode = node;
-        if (node.left) {
-            var { parentOfNodeToDelete, nodeToDelete, isLeftNode } = this.findSmallestRightNode(node.left, node, true);
-        } else if (node.right) {
-            var { parentOfNodeToDelete, nodeToDelete, isLeftNode } = this.findLargestLeftNode(node.right, node, false);
+    findMaxNode(ref) {
+        if (ref.right) {
+            return this.findMaxNode(ref.right)
         }
-        return {
-            parentOfNodeToDelete: parentOfNodeToDelete || parentNode,
-            nodeToDelete: nodeToDelete || node,
-            isLeftNode
-        };
-    }
-
-    findLargestLeftNode(node, parentNode, isLeftNode = true) {
-        if (!parentNode) parentNode = node;
-        if (node.right) {
-            var { parentOfNodeToDelete, nodeToDelete, isLeftNode } = this.findLargestLeftNode(node.right, node, false);
-        } else if (node.left) {
-            var { parentOfNodeToDelete, nodeToDelete, isLeftNode } = this.findSmallestRightNode(node.left, node, true);
-        }
-        return {
-            parentOfNodeToDelete: parentOfNodeToDelete || parentNode,
-            nodeToDelete: nodeToDelete || node,
-            isLeftNode
-        };
+        return ref;
     }
 
     delete(value) {
@@ -118,18 +100,31 @@ class BST {
         var nodeValToBeDeleted = null;
         if (node) {
             if (this.isLeafNode(node)) {
+                // leaf node
                 nodeValToBeDeleted = node.value;
                 this.makeParentsChildEmpty(parentRefNode, isLeftNode);
             } else {
-                if (node.right) {
-                    var { parentOfNodeToDelete, nodeToDelete, isLeftNode } = this.findSmallestRightNode(node);
-                } else {
-                    var { parentOfNodeToDelete, nodeToDelete, isLeftNode } = this.findLargestLeftNode(node);
-                }
-                // nodeToDelete will always be a leaf nodeF
                 nodeValToBeDeleted = node.value;
-                node.value = nodeToDelete.value;
-                this.makeParentsChildEmpty(parentOfNodeToDelete, isLeftNode);
+                // non-leaf node
+                if (!node.left) {
+                    // non-leaf node with only right child
+                    parentRefNode[isLeftNode ? "left" : "right"] = node.right;
+                } else if (!node.right) {
+                    // non-leaf node with only left child
+                    parentRefNode[isLeftNode ? "left" : "right"] = node.left;
+                } else {
+                    if (this.root.value === value) {
+                        // delete root node
+                        var maxNode = this.findMaxNode(this.root.left);
+                        var { parentRefNode, node, isLeftNode } = this.findNode(maxNode, maxNode, maxNode.value);
+                        this.root.value = nodeValToBeDeleted = node.value; // update node value to be deleted
+                        this.makeParentsChildEmpty(parentRefNode, isLeftNode);
+                    } else {
+                        // non-leaf node with both left and right children
+                        var maxNode = this.findMaxNode(node.right);
+                        parentRefNode[isLeftNode ? "left" : "right"] = maxNode;
+                    }
+                }
             }
             return nodeValToBeDeleted;
         } else {
@@ -192,7 +187,8 @@ bst.insert(13);
 bst.insert(7);
 bst.insert(9);
 bst.delete(20);
-bst.delete(10); // delete root
+bst.display();
+console.log(bst.delete(10)); // delete root
 bst.display();
 console.log("Sum of Leaf Nodes", bst.getSumOfLeafNodes());
 console.log("Sum of Non-Leaf Nodes", bst.getSumOfNonLeafNodes());
