@@ -175,6 +175,10 @@ class BST {
     getSumOfNonLeafNodes() {
         return this.getNonLeafNodes(this.root, 0);
     }
+
+    display() {
+        console.log(this.root);
+    }
 }
 
 var bst = new BST();
@@ -187,8 +191,8 @@ bst.insert(18);
 bst.insert(13);
 bst.insert(7);
 bst.insert(9);
-bst.root;
 bst.delete(20);
-console.log(bst.root);
+bst.delete(10); // delete root
+bst.display();
 console.log("Sum of Leaf Nodes", bst.getSumOfLeafNodes());
 console.log("Sum of Non-Leaf Nodes", bst.getSumOfNonLeafNodes());
