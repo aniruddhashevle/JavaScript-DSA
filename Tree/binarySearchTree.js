@@ -116,7 +116,7 @@ class BST {
                     if (this.root.value === value) {
                         // delete root node
                         var maxNode = this.findMaxNode(this.root.left);
-                        var { parentRefNode, node, isLeftNode } = this.findNode(maxNode, maxNode, maxNode.value);
+                        var { parentRefNode, node, isLeftNode } = this.findNode(this.root, this.root, maxNode.value);
                         this.root.value = nodeValToBeDeleted = node.value; // update node value to be deleted
                         this.makeParentsChildEmpty(parentRefNode, isLeftNode);
                     } else {
@@ -174,6 +174,52 @@ class BST {
     display() {
         console.log(this.root);
     }
+
+    findInorder(ref, arr = []) {
+        if (ref.left) {
+            this.findInorder(ref.left, arr);
+        }
+        arr.push(ref.value);
+        if (ref.right) {
+            this.findInorder(ref.right, arr);
+        }
+        return arr;
+    }
+
+    inorder() {
+        return this.findInorder(this.root);
+    }
+
+
+    preorder() {
+        return this.findPreorder(this.root);
+    }
+
+    findPreorder(ref, arr = []) {
+        arr.push(ref.value);
+        if (ref.left) {
+            this.findPreorder(ref.left, arr);
+        }
+        if (ref.right) {
+            this.findPreorder(ref.right, arr);
+        }
+        return arr;
+    }
+
+    postorder() {
+        return this.findPosorder(this.root);
+    }
+
+    findPosorder(ref, arr = []) {
+        if (ref.left) {
+            this.findPosorder(ref.left, arr);
+        }
+        if (ref.right) {
+            this.findPosorder(ref.right, arr);
+        }
+        arr.push(ref.value);
+        return arr;
+    }
 }
 
 var bst = new BST();
@@ -192,3 +238,6 @@ console.log(bst.delete(10)); // delete root
 bst.display();
 console.log("Sum of Leaf Nodes", bst.getSumOfLeafNodes());
 console.log("Sum of Non-Leaf Nodes", bst.getSumOfNonLeafNodes());
+console.log("Inorder: ", bst.inorder());
+console.log("Preorder: ", bst.preorder());
+console.log("Postorder: ", bst.postorder());
