@@ -176,11 +176,9 @@ class BST {
     }
 
     findInorder(ref, arr = []) {
-        if (ref.left) {
+        if (ref) {
             this.findInorder(ref.left, arr);
-        }
-        arr.push(ref.value);
-        if (ref.right) {
+            arr.push(ref.value);
             this.findInorder(ref.right, arr);
         }
         return arr;
@@ -196,11 +194,9 @@ class BST {
     }
 
     findPreorder(ref, arr = []) {
-        arr.push(ref.value);
-        if (ref.left) {
+        if (ref) {
+            arr.push(ref.value);
             this.findPreorder(ref.left, arr);
-        }
-        if (ref.right) {
             this.findPreorder(ref.right, arr);
         }
         return arr;
@@ -211,13 +207,11 @@ class BST {
     }
 
     findPosorder(ref, arr = []) {
-        if (ref.left) {
+        if (ref) {
             this.findPosorder(ref.left, arr);
-        }
-        if (ref.right) {
             this.findPosorder(ref.right, arr);
+            arr.push(ref.value);
         }
-        arr.push(ref.value);
         return arr;
     }
 }
