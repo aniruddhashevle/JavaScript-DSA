@@ -6,6 +6,16 @@ function checkIdenticalBSTs(tree1, tree2) {
     return JSON.stringify(tree1) === JSON.stringify(tree2);
 }
 
+// Transversal approach: May use any 2 of 3 transversal techniques, inorder, preorder and postorder
+// Time: O(n) Space: O(n)
+function checkIdenticalBSTsUsingTransversal(tree1, tree2) {
+    let inorderT1 = tree1.inorder();
+    let inorderT2 = tree2.inorder();
+    let preorderT1 = tree1.preorder();
+    let preorderT2 = tree2.preorder();
+    return JSON.stringify(inorderT1) === JSON.stringify(inorderT2) && JSON.stringify(preorderT1) === JSON.stringify(preorderT2);
+}
+
 // Pointers solution interative approach
 // Time: O(n) Space: O(n)
 function checkIdenticalBSTsIteratively(tree1, tree2) {
@@ -59,7 +69,7 @@ class BST {
             } else {
                 ref.left = node;
             }
-        } else if (value > ref.value) {
+        } else if (value >= ref.value) {
             if (ref.right) {
                 this.insertVal(ref.right, value);
             } else {
@@ -74,128 +84,6 @@ class BST {
         } else {
             this.root = new Node({ value });
         }
-    }
-
-    /**
-     * 
-     * @param {Node} parentRef 
-     * @param {Node|null} ref
-     * @param {number} value
-     * @param {boolean} isLeftNode
-     * 
-     * @returns {{parentRefNode: Node, node: Node, isLeftNode: boolean}}
-     */
-    findNode(parentRef, ref, value, isLeftNode = false) {
-        var node = parentRefNode = null;
-        if (ref) {
-            if (value < ref.value) {
-                var { parentRefNode, node, isLeftNode } = this.findNode(ref, ref.left, value, true);
-            } else if (value === ref.value) {
-                return { parentRefNode: parentRef, node: ref, isLeftNode };
-            } else {
-                var { parentRefNode, node, isLeftNode } = this.findNode(ref, ref.right, value, false);
-            }
-        } else {
-            return { parentRefNode, node, isLeftNode };
-        }
-        if (node) {
-            return { parentRefNode, node, isLeftNode };
-        } else return { parentRefNode, node, isLeftNode };
-    }
-
-    isLeafNode(ref) {
-        return ref.left === null && ref.right === null;
-    }
-
-    makeParentsChildEmpty(parent, isLeftNode) {
-        if (isLeftNode) {
-            parent.left = null;
-        } else {
-            parent.right = null;
-        }
-    }
-
-    findMaxNode(ref) {
-        if (ref.right) {
-            return this.findMaxNode(ref.right)
-        }
-        return ref;
-    }
-
-    delete(value) {
-        var { parentRefNode, node, isLeftNode } = this.findNode(this.root, this.root, value);
-        var nodeValToBeDeleted = null;
-        if (node) {
-            if (this.isLeafNode(node)) {
-                // leaf node
-                nodeValToBeDeleted = node.value;
-                this.makeParentsChildEmpty(parentRefNode, isLeftNode);
-            } else {
-                nodeValToBeDeleted = node.value;
-                // non-leaf node
-                if (!node.left) {
-                    // non-leaf node with only right child
-                    parentRefNode[isLeftNode ? "left" : "right"] = node.right;
-                } else if (!node.right) {
-                    // non-leaf node with only left child
-                    parentRefNode[isLeftNode ? "left" : "right"] = node.left;
-                } else {
-                    if (this.root.value === value) {
-                        // delete root node
-                        var maxNode = this.findMaxNode(this.root.left);
-                        var { parentRefNode, node, isLeftNode } = this.findNode(this.root, this.root, maxNode.value);
-                        this.root.value = nodeValToBeDeleted = node.value; // update node value to be deleted
-                        this.makeParentsChildEmpty(parentRefNode, isLeftNode);
-                    } else {
-                        // non-leaf node with both left and right children
-                        var maxNode = this.findMaxNode(node.right);
-                        parentRefNode[isLeftNode ? "left" : "right"] = maxNode;
-                    }
-                }
-            }
-            return nodeValToBeDeleted;
-        } else {
-            console.log('Node not found!');
-        }
-    }
-
-    getLeafNodes(ref, sum) {
-        if (ref) {
-            if (ref.left === null && ref.right === null) {
-                sum += ref.value;
-                return sum;
-            }
-            if (ref.left) {
-                sum = this.getLeafNodes(ref.left, sum);
-            }
-            if (ref.right) {
-                sum = this.getLeafNodes(ref.right, sum);
-            }
-        }
-        return sum;
-    }
-
-    getNonLeafNodes(ref, sum) {
-        if (ref) {
-            if (ref.left !== null || ref.right !== null) {
-                sum += ref.value;
-            }
-            if (ref.left) {
-                sum = this.getNonLeafNodes(ref.left, sum);
-            }
-            if (ref.right) {
-                sum = this.getNonLeafNodes(ref.right, sum);
-            }
-        }
-        return sum;
-    }
-
-    getSumOfLeafNodes() {
-        return this.getLeafNodes(this.root, 0);
-    }
-
-    getSumOfNonLeafNodes() {
-        return this.getNonLeafNodes(this.root, 0);
     }
 
     display() {
@@ -247,25 +135,26 @@ class BST {
 var bst1 = new BST();
 bst1.insert(10);
 bst1.insert(15);
+bst1.insert(8);
+bst1.insert(12);
+bst1.insert(94);
+bst1.insert(81);
 bst1.insert(5);
-bst1.insert(80); // in bst2 this value is 8, hence not identical
-bst1.insert(20);
-bst1.insert(18);
-bst1.insert(13);
-bst1.insert(7);
-bst1.insert(9);
+bst1.insert(2);
+bst1.insert(11);
 
 var bst2 = new BST();
 bst2.insert(10);
-bst2.insert(15);
-bst2.insert(5);
 bst2.insert(8);
-bst2.insert(20);
-bst2.insert(18);
-bst2.insert(13);
-bst2.insert(7);
-bst2.insert(9);
+bst2.insert(5);
+bst2.insert(15);
+bst2.insert(2);
+bst2.insert(12);
+bst2.insert(11);
+bst2.insert(94);
+bst2.insert(81);
 
 console.log("Trees identical simpler way: ", checkIdenticalBSTs(bst1.root, bst2.root));
 console.log("Trees identical iterative way: ", checkIdenticalBSTsIteratively(bst1.root, bst2.root));
+console.log("Trees identical transversal way: ", checkIdenticalBSTsUsingTransversal(bst1, bst2));
 
