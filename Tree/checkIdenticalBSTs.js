@@ -23,6 +23,35 @@ function checkIdenticalBSTsIteratively(tree1, tree2) {
     return checkIdential(ref1, ref2);
 }
 
+// IMP: w/o using BST, just by specifying 2 arrays which will form a proper BST
+// As BST is not built, we can not make it's transversal, but can use following technique
+function sameBsts(arrayOne, arrayTwo) {
+    if (JSON.stringify(arrayOne) === JSON.stringify(arrayTwo)) {
+        return true;
+    } else if (arrayOne[0] !== arrayTwo[0] || arrayOne.length !== arrayTwo.length) {
+        return false;
+    } else {
+        var root = arrayOne[0];
+        var leftArrA1 = [], rightArrA1 = [], leftArrA2 = [], rightArrA2 = [];;
+        for (var i = 1; i < arrayOne.length; i++) {
+            if (arrayOne[i] < root)
+                leftArrA1.push(arrayOne[i]);
+            else
+                rightArrA1.push(arrayOne[i]);
+        }
+        for (var i = 1; i < arrayTwo.length; i++) {
+            if (arrayTwo[i] < root)
+                leftArrA2.push(arrayTwo[i]);
+            else
+                rightArrA2.push(arrayTwo[i]);
+        }
+        let result = true;
+        result = sameBsts(leftArrA1, leftArrA2);
+        if (!result) return result;
+        else return sameBsts(rightArrA1, rightArrA2);
+    }
+}
+
 function checkIdential(node1, node2) {
     var isIdentical = true;
     if (node1 !== null && node2 !== null) {
