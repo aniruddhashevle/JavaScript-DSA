@@ -1,5 +1,5 @@
 /**
- * Circular Queue using Array
+ * BST using LinkedList
  * 
  * insert
  * delete
@@ -232,6 +232,3 @@ console.log(bst.delete(10)); // delete root
 bst.display();
 console.log("Sum of Leaf Nodes", bst.getSumOfLeafNodes());
 console.log("Sum of Non-Leaf Nodes", bst.getSumOfNonLeafNodes());
-console.log("Inorder: ", bst.inorder());
-console.log("Preorder: ", bst.preorder());
-console.log("Postorder: ", bst.postorder());

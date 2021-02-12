@@ -100,9 +100,7 @@ bst.insert(18);
 bst.insert(13);
 bst.insert(7);
 bst.insert(9);
-bst.delete(20);
 bst.display();
-console.log(bst.delete(10)); // delete root
 bst.display();
 // DFS : Called Recursive and hence uses Stack memory
 console.log("Inorder: ", bst.inorder());
