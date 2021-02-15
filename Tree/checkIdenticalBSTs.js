@@ -22,6 +22,7 @@ function checkIdenticalBSTsIteratively(tree1, tree2) {
     var ref1 = tree1, ref2 = tree2;
     return checkIdential(ref1, ref2);
 }
+
 /** 
 IMP: w/o using BST, just by specifying 2 arrays which will form a proper BST
 As BST is not built, we can not make it's transversal, but can use following technique
@@ -29,7 +30,7 @@ As BST is not built, we can not make it's transversal, but can use following tec
 T: "arrayOne": [10, 15, 8, 12, 94, 81, 5, 2, 11] "arrayTwo": [10, 8, 5, 15, 2, 12, 11, 94, 81]
     1 => 
         leftArrA1 = [8, 5, 2]         rightArrA1 = [15, 12, 94, 81,11]
-        leftArrA2 = [8, 5,2,]         rightArrA2 = [15, 12, 11, 94, 81]
+        leftArrA2 = [8, 5, 2]         rightArrA2 = [15, 12, 11, 94, 81]
     2 =>
         leftArrA1 = [12,11]         rightArrA1 = [94, 81]
         leftArrA2 = [12,11]         rightArrA2 = [94, 81]
