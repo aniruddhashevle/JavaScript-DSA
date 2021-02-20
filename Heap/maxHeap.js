@@ -55,10 +55,6 @@ class MaxHeap {
         }
     }
 
-    sort() {
-
-    }
-
     delete() {
         this.swapArrayElem(this.heap, 0, this.heap.length - 1);
         let deletedVal = this.heap.pop();
@@ -77,4 +73,10 @@ mh.display();
 mh.insert(40);
 mh.display();
 console.log(mh.delete());
+let sorted = [];
+let n = mh.heap.length;
+for (var i = 0; i < n; i++) {
+    sorted.unshift(mh.delete());
+}
+console.log('sorted',sorted)
 mh.display();
