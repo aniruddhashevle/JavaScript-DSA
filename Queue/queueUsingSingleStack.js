@@ -28,7 +28,7 @@ MyQueue.prototype.push = function (x) {
 };
 
 /**
- * Removes the element from in front of queue and returns that element.
+ * Reverse the stack
  * @return {number}
  */
 MyQueue.prototype.pop = function () {
