@@ -23,6 +23,32 @@ function checkIdenticalBSTsIteratively(tree1, tree2) {
     return checkIdential(ref1, ref2);
 }
 
+function checkIdential(node1, node2) {
+    var isIdentical = true;
+    if (node1 !== null && node2 !== null) {
+        if (node1.value !== node2.value) {
+            return false;
+        } else {
+            if (node1.left && node2.left) {
+                isIdentical = checkIdential(node1.left, node2.left);
+                if (!isIdentical) return false;
+            } else if ((node1.left && !node2.left) || (!node1.left && node2.left)) {
+                return false;
+            }
+            if (node1.right && node2.right) {
+                isIdentical = checkIdential(node1.right, node2.right);
+                if (!isIdentical) return false;
+            } else if (((node1.right && !node2.right) || (!node1.right && node2.right))) {
+                return false;
+            }
+        }
+    } else if ((node1 !== null && node2 === null) || (node1 === null && node2 !== null)) {
+        return false;
+    }
+    return isIdentical;
+}
+
+
 /** 
 IMP: w/o using BST, just by specifying 2 arrays which will form a proper BST
 As BST is not built, we can not make it's transversal, but can use following technique
@@ -67,31 +93,6 @@ function sameBsts(arrayOne, arrayTwo) {
         if (!result) return result;
         else return sameBsts(rightArrA1, rightArrA2);
     }
-}
-
-function checkIdential(node1, node2) {
-    var isIdentical = true;
-    if (node1 !== null && node2 !== null) {
-        if (node1.value !== node2.value) {
-            return false;
-        } else {
-            if (node1.left && node2.left) {
-                isIdentical = checkIdential(node1.left, node2.left);
-                if (!isIdentical) return false;
-            } else if ((node1.left && !node2.left) || (!node1.left && node2.left)) {
-                return false;
-            }
-            if (node1.right && node2.right) {
-                isIdentical = checkIdential(node1.right, node2.right);
-                if (!isIdentical) return false;
-            } else if (((node1.right && !node2.right) || (!node1.right && node2.right))) {
-                return false;
-            }
-        }
-    } else if ((node1 !== null && node2 === null) || (node1 === null && node2 !== null)) {
-        return false;
-    }
-    return isIdentical;
 }
 
 class Node {

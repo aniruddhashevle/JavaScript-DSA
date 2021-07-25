@@ -1,0 +1,51 @@
+Check: 
+1.https://leetcode.com/problems/group-the-people-given-the-group-size-they-belong-to/
+https://leetcode.com/problems/self-crossing/
+https://leetcode.com/problems/count-number-of-teams/discuss/?currentPage=1&orderBy=hot&query=&tag=javascript
+https://leetcode.com/problems/all-paths-from-source-to-target/
+https://leetcode.com/problems/arithmetic-subarrays/submissions/
+https://leetcode.com/problems/find-valid-matrix-given-row-and-column-sums/submissions/
+https://leetcode.com/problems/binary-search-tree-to-greater-sum-tree/
+
+var temp = head, size = i = 0, last;
+	while(temp) {
+		if(!temp.next) last = temp;
+		temp = temp.next;
+		size++;
+}
+temp = head, prevRef = head;
+while(i < size) {
+	if(temp.value >= k) {
+		var ref = temp;
+		temp = temp.next;
+		last.next = ref;
+		ref.next = null;
+		last = ref;
+		
+} else {
+	temp = temp.next;
+}
+prevRef = temp;
+	i++;
+}
+return head;
+
+
+
+
+
+
+// function minHeightBst(array) {
+//     let arr = [...array];
+//     arr.sort((a, b) => a - b);
+//     var mid = Math.floor(arr.length / 2);
+//     console.log('array', arr, mid, arr[mid])
+//     var bst = new BST();
+//     bst.insert(arr[mid]);
+//     for (var i = 0; i < arr.length; i++) {
+//         if (i !== mid) {
+//             bst.insert(arr[i]);
+//         }
+//     }
+//     console.log('bst', bst.root)
+// }

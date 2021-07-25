@@ -49,3 +49,32 @@ function quickSort(a, low, high) {
 
 console.log("Sorted in ascending order", sorted);
 
+
+sortedValueAt([2, 1, 4, 3, 5], 3)
+function sortedValueAt(array, m) {
+    let start = 1, end = array.length - 1;
+    let pivot = array[0];
+    while (start < end) {
+        while (array[start] < pivot) {
+            start++;
+        }
+        while (array[end] > pivot) {
+            end--;
+        }
+        if (start < end) {
+            let temp = array[start];
+            array[start] = array[end];
+            array[end] = temp;
+        }
+    }
+    array[0] = array[end]
+    array[end] = pivot;
+    console.log(array, end);
+    if (end === m - 1) {
+        return array[end];
+    } else if (end > m) {
+        return sortedValueAt(array.slice(0, end), m);
+    } else {
+        return sortedValueAt(array.slice(end + 1, array.length), end + 1 - m);
+    }
+}

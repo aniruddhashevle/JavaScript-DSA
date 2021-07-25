@@ -9,11 +9,11 @@
 
     [
         [-1, -1, -1, -1, -1, 0]
-        [-1, -1, -1, -1, 1, 0]
-        [-1, -1, -1, 0, 0, 0]
-        [-1, -1, 0, 0, 0, 0]
-        [-1, 0, 0, 0, 0, 0]
-        [0, 0, 0, 0, 0, 0]
+        [-1, -1, -1, -1, 1, 1]
+        [-1, -1, -1, 2, 2, 1]
+        [-1, -1, 5, 5, 3, 1]
+        [-1, 14, 14, 9, 4, 1]
+        [42, 42, 28, 14, 5, 1]
     ]
 
 
@@ -55,3 +55,45 @@ function findPossibleWays(n) {
 }
 
 findPossibleWays(6);
+
+function decrypt(word) {
+    let result = [];
+    const fROM_RANGE = "a".charCodeAt(0);
+    const TO_RANGE = "z".charCodeAt(0);
+    for (var index = 0; index < word.length; index++) {
+        let code = word.charCodeAt(index);
+        result[index] = index ? code + result[index - 1] : code + 1;
+        let data = result[index];
+        if (!(data >= fROM_RANGE && data <= TO_RANGE)) {
+            let diff = data - TO_RANGE;
+            diff = diff % 26;
+            result[index] = TO_RANGE - diff;
+        }
+        result[index] = String.fromCharCode(result[index]);
+    }
+    return result.join("");
+}
+
+
+function findCommon(s1, s2) {
+    let result = [];
+    let common;
+    for (let i = 0; i < s1.length; i++) {
+        let index = s2.indexOf(s1[i]);
+        if (index !== -1) {
+            common += s1[i];
+            j = index;
+            k = i + 1;
+            while (k < s1.length && j < s2.length) {
+                index = s2.indexOf(s1[k], j);
+                if (index !== -1) {
+                    common += s1[k];
+                    j = index;
+                }
+                k++;
+            }
+            result.push(common);
+        }
+    }
+    console.log('result', result)
+}

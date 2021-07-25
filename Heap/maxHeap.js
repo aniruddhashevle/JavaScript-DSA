@@ -15,6 +15,9 @@ class MaxHeap {
     }
 
     getMaxChildIndex(parentIndex) {
+        // [10,15,30,40,50,100,40]
+        // 2
+        // 5/2 => 2
         let leftChildIndex = parentIndex * 2 + 1;
         let rightChildIndex = parentIndex * 2 + 2;
         let maxChildVal = Math.max(this.heap[leftChildIndex], this.heap[rightChildIndex] || -1);
@@ -78,5 +81,5 @@ let n = mh.heap.length;
 for (var i = 0; i < n; i++) {
     sorted.unshift(mh.delete());
 }
-console.log('sorted',sorted)
+console.log('sorted', sorted)
 mh.display();
