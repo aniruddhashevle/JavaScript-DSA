@@ -141,6 +141,19 @@ class LinkedList {
         return deletedData;
     }
 
+    deleteAlternateNodes() {
+        let tempNodeRef = this.head;
+        while(tempNodeRef.next !== null) {
+            if(tempNodeRef.next && tempNodeRef.next.next === null) {
+                tempNodeRef.next = null;
+            } else {
+                tempNodeRef.next = tempNodeRef.next.next;
+                tempNodeRef = tempNodeRef.next;
+            }
+            this.size--;
+        }
+    }
+
     updateAt(data, index) {
         if (this.isEmpty()) {
             console.log('Linked list is Empty!');
@@ -272,6 +285,7 @@ console.log('ll', ll);
 ll.deleteAtStart();
 ll.deleteAtEnd();
 ll.deleteAt(2);
+ll.deleteAlternateNodes();
 console.log('ll', ll);
 
 // update
